@@ -1,19 +1,21 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.generics import ListAPIView
+
+from rest_framework import serializers, status, filters
+
 from .models import Person
 from .serializers import PersonSerializer
-from rest_framework import serializers
-from rest_framework import status
 
 @api_view(['GET'])
 def ApiOverview(request):
     api_urls = {
         'all_items': '/person',
-        'Search by Name': '/?name=name',
-        'Search by Email': '/?email=email',
+        'Search by ID': '/person/pk',
+        'Search by Name or Email': '/list?search=name or email',
         'Add': '/person',
-        'Update': '/update/pk',
-        'Delete': '/item/pk/delete'
+        'Update': '/person/pk',
+        'Delete': '/person/pk'
     }
  
     return Response(api_urls)
@@ -60,3 +62,9 @@ def person(request, pk):
     elif request.method == 'DELETE':
         person.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class PeopleListView(ListAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name', 'email']
