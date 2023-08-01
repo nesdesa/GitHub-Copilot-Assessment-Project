@@ -29,7 +29,7 @@ img {
 }
 .box-card {
     width: 200px;
-    height: 100vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
 

@@ -6,12 +6,11 @@
         <el-button type="primary">New Contact</el-button>
       </div>
     </template>
-    <el-table :data="tableData.value" style="width: 100%">
-      
+    <el-table :data="filteredData" style="width: 100%">
       <el-table-column label="Name" prop="name" />
       <el-table-column label="Address" prop="address" />
       <el-table-column label="Email" prop="email" />
-      <el-table-column label="Contact No." prop="contactNumber" />
+      <el-table-column label="Contact No." prop="contact_number" />
       <el-table-column align ="right">
         <template #header>
           <el-input v-model="search" size="small" placeholder="Search.." />
@@ -46,13 +45,17 @@ function getTableData() {
   axios
     .get('http://127.0.0.1:8000/list?search=' + search.value)
     .then((response) => {
-      console.log(response.data);
       tableData.value = response.data;
+      console.log(tableData.value);
     })
     .catch((error) => {
       console.log(error);
     });
 }
+
+const filteredData = computed(() => {
+  return tableData.value;
+});
 
 onMounted(() => {
   getTableData();
@@ -62,6 +65,13 @@ watch(search, () => {
   getTableData();
 });
 
+function handleDelete(index, row) {
+  console.log(index, row);
+}
+
+function handleEdit(index, row) {
+  console.log(index, row);
+}
 
 
 </script>
