@@ -2,7 +2,7 @@
 
 A project to showcase the completion of different action items from Github Copilot Workshop. This project is a simple Contact Management System that creates, reads, updates, and deletes information about a certain individual.
 
-## Technologies Used 
+## Technologies
 ### VueJs 
 JavaScript framework for building user interfaces
 ```
@@ -17,7 +17,7 @@ Django filters
 Cors headers
 ```
 
-## Database Used
+## Database
 ```
 dbsqlite
 ```
