@@ -159,7 +159,7 @@ function postForm() {
 
 function putForm() {
   axios
-    .put('http://127.0.0.1:8000/person/' + form.value.id)
+    .put('http://127.0.0.1:8000/person/' + form.value.id, form.value)
       .then((response) => {
         getTableData();
         ElMessage({
@@ -180,10 +180,6 @@ watch (form, () => {
   console.log(form.value);
 })
 
-
-
-
-
 </script>
 
 <style scoped>
@@ -195,5 +191,7 @@ watch (form, () => {
 
 .box-card {
   width: 100%;
+  min-height: 500px;
+  max-height: 100vh;
 }
 </style>
