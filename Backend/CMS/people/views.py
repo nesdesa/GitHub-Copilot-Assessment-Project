@@ -4,6 +4,7 @@ from rest_framework.generics import ListAPIView
 
 from rest_framework import serializers, status, filters
 
+import uuid
 from .models import Person
 from .serializers import PersonSerializer
 
@@ -28,6 +29,7 @@ def people(request):
         return Response(people_serializer.data)
     
     elif request.method == 'POST':
+        request.data['id'] = str(uuid.uuid4())
         person = PersonSerializer(data=request.data)
     
         # validating for already existing data
