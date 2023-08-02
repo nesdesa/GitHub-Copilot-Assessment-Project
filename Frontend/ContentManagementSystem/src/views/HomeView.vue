@@ -33,6 +33,13 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      :hide-on-single-page="paginationIsHidden"
+      :total="total"
+      v-model="currentPage"
+      @current-change="handleCurrentChange"
+      layout="prev, pager, next"
+    />
   </el-card>
   <ContactFormDialog :dialog-form-visible="dialogFormVisible" :form="form" @submittedForm="handleConfirm"/>
 </template>
@@ -47,13 +54,16 @@ import { ElMessage } from 'element-plus';
 // table data from api using axios
 const tableData = ref([]);
 const search = ref('');
+const paginationIsHidden = ref(false);
+const total = ref(0);
+const currentPage = ref(1);
 
 function getTableData() {
   axios
-    .get('http://127.0.0.1:8000/list?search=' + search.value)
+    .get('http://127.0.0.1:8000/list?search=' + search.value + '&page=' + currentPage.value)
     .then((response) => {
-      tableData.value = response.data;
-      console.log(tableData.value);
+      tableData.value = response.data.results;
+      total.value = response.data.count;
     })
     .catch((error) => {
       console.log(error);
@@ -71,6 +81,21 @@ onMounted(() => {
 watch(search, () => {
   getTableData();
 });
+
+watch(tableData, () => {
+  if (total <= 1) {
+    paginationIsHidden.value = true;
+  }
+  else {
+    paginationIsHidden.value = false;
+  }
+});
+
+
+function handleCurrentChange(val) {
+  currentPage.value = val;
+  getTableData();
+}
 
 
 // create, edit and delete functions

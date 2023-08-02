@@ -23,8 +23,8 @@ import Sidemenu from './components/Sidemenu.vue';
 
 <style scoped>
 .common-layout {
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 .content {
   width: 100%;
