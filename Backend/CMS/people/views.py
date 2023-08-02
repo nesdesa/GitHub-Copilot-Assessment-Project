@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
+from rest_framework.pagination import PageNumberPagination
 
 from rest_framework import serializers, status, filters
 
@@ -68,5 +69,6 @@ def person(request, pk):
 class PeopleListView(ListAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
+    pagination_class = PageNumberPagination
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name', 'email']
