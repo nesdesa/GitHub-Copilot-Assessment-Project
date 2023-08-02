@@ -3,7 +3,7 @@
     <template #header>
       <div class="card-header">
         <h1>Contacts</h1>
-        <el-button type="primary">New Contact</el-button>
+        <el-button type="primary" @click="handleCreate()">New Contact</el-button>
       </div>
     </template>
     <el-table :data="filteredData" style="width: 100%">
@@ -16,26 +16,33 @@
           <el-input v-model="search" size="small" placeholder="Search.." />
         </template>
         <template #default="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
+          <el-button size="small" @click="handleEdit(scope.row)"
             >Edit</el-button
           >
-          <el-button
-            size="small"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
-            >Delete</el-button
-          >
+          <el-popconfirm title="Confirm delete?">
+            <template #reference>
+              <el-button
+                size="small"
+                type="danger"
+                @click="handleDelete(scope.row)"
+                >Delete</el-button
+              >
+            </template>
+          </el-popconfirm>
+          
         </template>
       </el-table-column>
     </el-table>
   </el-card>
+  <ContactFormDialog :dialog-form-visible="dialogFormVisible" :form="form" @submittedForm="handleConfirm"/>
 </template>
 
 <script setup>
 
 import { ref, computed, onMounted, watch } from 'vue';
 import axios from 'axios';
-
+import ContactFormDialog from '../components/ContactFormDialog.vue';
+import { ElMessage } from 'element-plus';
 
 // table data from api using axios
 const tableData = ref([]);
@@ -65,13 +72,116 @@ watch(search, () => {
   getTableData();
 });
 
-function handleDelete(index, row) {
-  console.log(index, row);
+
+// create, edit and delete functions
+const form = ref({
+  id: '',
+  name: '',
+  address: '',
+  email: '',
+  contact_number: '',
+});
+const dialogFormVisible = ref(false);
+const isNew = ref(true);
+
+function handleCreate() {
+  form.value = {
+    id: '',
+    name: '',
+    address: '',
+    email: '',
+    contact_number: '',
+  }
+  dialogFormVisible.value = true;
+  isNew.value = true;
 }
 
-function handleEdit(index, row) {
-  console.log(index, row);
+function handleDelete(row) {
+  axios
+    .delete('http://127.0.0.1:8000/person/' + row.id)
+    .then((response) => {
+      getTableData();
+      ElMessage({
+        message: 'Contact successfully deleted.',
+        type: 'success',
+      })
+    })
+    .catch((error) => {
+      console.log(error);
+      ElMessage({
+        message: 'Oops, something went wrong when deleting contact. Check console for more details',
+        type: 'error',
+      })
+    });
 }
+
+function handleEdit(row) {
+  form.value = {
+    id: row.id,
+    name: row.name,
+    address: row.address,
+    email: row.email,
+    contact_number: row.contact_number,
+  }
+  dialogFormVisible.value = true;
+  isNew.value = false;
+}
+
+function handleConfirm(submittedForm) {
+  form.value = submittedForm;
+  dialogFormVisible.value = false;
+  if (isNew.value == true) {
+    postForm();
+  }
+  else {
+    putForm();
+  }
+}
+
+function postForm() {
+  axios
+    .post('http://127.0.0.1:8000/person/', form.value)
+      .then((response) => {
+        getTableData();
+        ElMessage({
+          message: 'Contact successfully created.',
+          type: 'success',
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+        ElMessage({
+          message: 'Oops, something went wrong when creating contact. Check console for more details',
+          type: 'error',
+        })
+      });
+}
+
+function putForm() {
+  axios
+    .put('http://127.0.0.1:8000/person/' + form.value.id)
+      .then((response) => {
+        getTableData();
+        ElMessage({
+          message: 'Contact successfully created.',
+          type: 'success',
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+        ElMessage({
+          message: 'Oops, something went wrong when creating contact. Check console for more details',
+          type: 'error',
+        })
+      });
+}
+
+watch (form, () => {
+  console.log(form.value);
+})
+
+
+
 
 
 </script>

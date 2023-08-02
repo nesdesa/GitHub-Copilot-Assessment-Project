@@ -9,14 +9,35 @@ import Sidemenu from './components/Sidemenu.vue';
       <el-aside width="200px">
         <Sidemenu />
       </el-aside>
-      <el-container>
-        <el-header>
-          <el-card>
+      <div class="content">
+        <el-header class="header-title">
+          <el-card class="header-card">
             <h1>Contact Management System</h1>
           </el-card>
         </el-header>
         <el-main><RouterView /></el-main>
-      </el-container>
+      </div>
     </el-container>
   </div>
 </template>
+
+<style scoped>
+.common-layout {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+.content {
+  width: 100%;
+}
+
+.header-title{
+  height: fit-content;
+}
+
+.header-card{
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+</style>

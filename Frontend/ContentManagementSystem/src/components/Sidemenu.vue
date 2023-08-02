@@ -42,6 +42,5 @@ img {
 /* Optionally, you can add some hover effects for better appearance */
 .menu-link:hover {
   color: #2ab52e; /* Change the hover color to your desired color */
-  background-color: #f5f5f5; /* Add a background color on hover */
 }
 </style>
