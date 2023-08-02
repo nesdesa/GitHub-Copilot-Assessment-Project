@@ -19,14 +19,9 @@
           <el-button size="small" @click="handleEdit(scope.row)"
             >Edit</el-button
           >
-          <el-popconfirm title="Confirm delete?">
+          <el-popconfirm title="Confirm delete?" @confirm="handleDelete(scope.row)">
             <template #reference>
-              <el-button
-                size="small"
-                type="danger"
-                @click="handleDelete(scope.row)"
-                >Delete</el-button
-              >
+              <el-button size="small" type="danger">Delete</el-button>
             </template>
           </el-popconfirm>
           

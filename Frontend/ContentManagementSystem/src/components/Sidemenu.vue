@@ -1,24 +1,38 @@
 <template>
-    <el-card class="box-card">
+    <div class="box-card">
         <img src="../assets/fullscale_logo.png" alt="Full Scale Logo">
         <el-divider border-style="double" />
         <el-menu
             default-active="1"
             class="el-menu-vertical"
+            active-text-color="#2ab52e"
+            background-color="transparent"
         >
-            <el-menu-item index="1">
-                <RouterLink to="/" class="menu-link"><h1>Home</h1></RouterLink>
-            </el-menu-item>
-            <el-menu-item index="2">
-                <RouterLink to="/details" class="menu-link"><h1>Details</h1></RouterLink>
-            </el-menu-item>
+            <RouterLink to="/" class="menu-link">
+                <el-menu-item index="1">
+                    <el-icon><House /></el-icon>
+                    <h1>Home</h1>
+                </el-menu-item>
+            </RouterLink>
+            <RouterLink to="/details" class="menu-link">
+                <el-menu-item index="2">
+                    <el-icon><User /></el-icon>
+                    <h1>Details</h1>
+                </el-menu-item>
+            </RouterLink>
         </el-menu>
-    </el-card>
+    </div>
+    
     
 </template>
     
 <script setup> 
 import { RouterLink } from 'vue-router'
+import {
+  House,
+  User
+} from '@element-plus/icons-vue'
+
 </script>
 
 <style scoped>
@@ -28,11 +42,10 @@ img {
     object-fit: contain;
 }
 .box-card {
-    width: 200px;
-    height: 80vh;
+    width: 100%;
+    height: 75vh;
     display: flex;
     flex-direction: column;
-
 }
 .menu-link {
   text-decoration: none;

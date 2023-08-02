@@ -7,7 +7,10 @@ import Sidemenu from './components/Sidemenu.vue';
   <div class="common-layout">
     <el-container>
       <el-aside width="200px">
-        <Sidemenu />
+        <el-card body-style="background-color: '#545c64';">
+          <Sidemenu />
+        </el-card>
+        
       </el-aside>
       <div class="content">
         <el-header class="header-title">
@@ -28,6 +31,10 @@ import Sidemenu from './components/Sidemenu.vue';
 }
 .content {
   width: 100%;
+}
+
+.sidemenu-card{
+  background-color: "#545c64";
 }
 
 .header-title{
