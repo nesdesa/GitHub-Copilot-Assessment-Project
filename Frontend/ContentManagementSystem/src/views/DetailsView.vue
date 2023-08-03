@@ -16,7 +16,6 @@
           :fetch-suggestions="querySearchAsync"
           placeholder="Type Name"
           @select="handleSelect"
-          :trigger-on-focus="false"
         />
       </el-form-item>
         <el-form-item label="Address" >
