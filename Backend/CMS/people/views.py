@@ -26,6 +26,7 @@ def ApiOverview(request):
 def people(request):
     if request.method == 'GET':
         people = Person.objects.all()
+        people = people.order_by('name')
         people_serializer = PersonSerializer(people, many=True)
         return Response(people_serializer.data)
     

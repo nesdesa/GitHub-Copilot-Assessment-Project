@@ -48,6 +48,9 @@
 import { onMounted, ref, watch } from 'vue'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import { inject } from 'vue'
+
+const api = inject('api')
 
 interface LinkItem {
   id: string
@@ -62,7 +65,7 @@ const links = ref<LinkItem[]>([])
 
 const loadAll = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/person');
+    const response = await axios.get(api + '/person');
     const dataWithAdditionalField = response.data.map((item) => ({
       ...item,
       value: item.name,
