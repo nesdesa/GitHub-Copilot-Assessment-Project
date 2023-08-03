@@ -9,7 +9,7 @@
       :model="form" 
       label-width="120px"
       label-position="left"
-      class="form-container">
+       class="form-container">
       <el-form-item label="Name" :disabled="false">
         <el-autocomplete
           v-model="form.name"
@@ -19,7 +19,7 @@
           :trigger-on-focus="false"
         />
       </el-form-item>
-      <el-form-item label="Address" >
+        <el-form-item label="Address" >
         <el-input v-model="form.address" :disabled="isDisabled"/>
       </el-form-item>
       <el-form-item label="Email">
@@ -145,6 +145,7 @@ const handleDelete = async () => {
       type: 'success',
     });
     form.value.name = ''
+    isDisabled.value = true;
   } catch (error) {
     console.log(error);
     ElMessage({
