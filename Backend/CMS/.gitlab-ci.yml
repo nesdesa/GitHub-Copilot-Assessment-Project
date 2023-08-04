@@ -1,0 +1,19 @@
+# .gitlab-ci.yml
+image: docker:latest
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker build -t cms-web .
+
+deploy:
+  stage: deploy
+  script:
+    - docker run -d -p 8080:80 cms-web
